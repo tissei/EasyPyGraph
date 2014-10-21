@@ -61,47 +61,54 @@ class DiGraph:
             if adjacent in self.adjList[vertex]:
                 del self.adjList[vertex][adjacent]
                 
-    # Verify if a given vertex exists
-    #
-    # verify if the vertex is in the adjList
-    #
-    # @param integer vertex the vertex to be searched
-    # @return
+    """            
+    Verify if a given vertex exists
+    
+    verify if the vertex is in the adjList
+    
+    @param integer vertex the vertex to be searched
+    @return
+    """
                 
     def hasVertex(self, vertex):
         return vertex in self.adjList
+    """
+    Verify if an edge exists between two vertex
     
-    # Verify if an edge exists between two vertex
-    #
-    # verify if the vertex is in the adjList and if it's adjacent is in the 
-    # vertex adjList.
-    #
-    # @param vertex   integer the starting vertex
-    # @param adjacent integer the adjacent vertex from the starting vertex
-    # @return         boolean True or False
+    verify if the vertex is in the adjList and if it's adjacent is in the 
+    vertex adjList.
+    
+    @param vertex   integer the starting vertex
+    @param adjacent integer the adjacent vertex from the starting vertex
+    @return         boolean True or False
+    """
 
     def hasEdge(self, vertex, adjacent):
         return vertex in self.adjList and adjacent in self.adjList[vertex]
     
-    # Returns the output degree of a vertex
-    #
-    # returns the lenght of the adjacent list from the given vertex
-    #
-    # @param vertex integer the vertex wich the degree will be calculated
-    # @return integer if the vertex exists and None if it dont
+    """
+    Returns the output degree of a vertex
+    
+    returns the lenght of the adjacent list from the given vertex
+    
+    @param vertex integer the vertex wich the degree will be calculated
+    @return integer if the vertex exists and None if it dont
+    """
     
     def outputDegree(self, vertex):
         if vertex in self.adjList:
             return len(self.adjList[vertex])
         return None
     
-    # Returns the input degree of a given vertex
-    #
-    # iterate trough all vertexes in the adjList and verify if any of 
-    # them is adjacent to the given vertex.
-    #
-    # @param vertex integer the vertex wich the degree will be calculated
-    # @return integer if the vertex exists and None if it dont
+    """
+    Returns the input degree of a given vertex
+    
+    iterate trough all vertexes in the adjList and verify if any of 
+    them is adjacent to the given vertex.
+    
+    @param vertex integer the vertex wich the degree will be calculated
+    @return integer if the vertex exists and None if it dont
+    """
     
     def inputDegree(self, vertex):
         if vertex in self.adjList:
