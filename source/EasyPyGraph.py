@@ -196,9 +196,7 @@ class DiGraph:
     """
     
     def areConected(self, start, end):
-         if end in self.depthSearch(start): 
-                return True
-         return False
+         end in self.depthSearch(start): 
     
     """
     Verifies if a vertex can be reached back starting from himself
