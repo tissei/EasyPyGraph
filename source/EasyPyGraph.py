@@ -160,7 +160,21 @@ class DiGraph:
             return degree
         return None
     
-    def lengthSearch(self, start):
+    """
+    Breadth-first search (BFS) is a strategy for searching in a graph when 
+    search is limited to essentially two operations: (a) visit and inspect a 
+    node of a graph; (b) gain access to visit the nodes that neighbor the 
+    currently visited node.
+    
+    the BFS begins at a root node and inspects all the neighboring nodes. 
+    Then for each of those neighbor nodes in turn, it inspects their neighbor 
+    nodes which were unvisited, and so on.
+    
+    @param vertex root vertex
+    @return list list with the search order
+    """
+    
+    def breadthFirstSearch(self, start):
         visited = [start]
         queue = [start]
         while queue:
@@ -173,7 +187,22 @@ class DiGraph:
                     queue.append(adjacent)
         return visited
     
-    def depthSearch(self, start):
+    """
+    Depth-first search (DFS) is an algorithm for traversing or searching 
+    graphs. Starts with a root node and explores as far as possible along 
+    each branch before backtracking.    
+    
+    iterates trough the starting vertex adjacents, select on of then and
+    keep going trought it's adjacent until theres a vertex with no adjacents
+    or all of its adjacent have already being visited, then comes back to the
+    starting vertex, select another adjacent and reapeat the process until all
+    vertexes are visited.
+    
+    @param vertex starting vertex
+    @return list list with the search order
+    """
+    
+    def depthFirstSearch(self, start):
         visited = []
         queue = [start]
         while lista:
@@ -214,7 +243,7 @@ class DiGraph:
     """
     Verifies if there is no vertex that can be reached back starting from himself
     
-    iterate trough adjList to test all vertexes and verifies if the is any way
+    iterate trough adjList to test all vertexes and verifies if there is any way
     that they can be reached back starting from himselfs.
     
     @param vertex integer the starting vertex
@@ -227,8 +256,100 @@ class DiGraph:
                 if vertex in self.adjList[adjacent]:
                     return False
         return True
+    
+    """
+    Topological ordering of a graph is a linear ordering of its 
+    vertices such that for every directed edge uv from vertex u to vertex v, 
+    u comes before v in the ordering.
+    
+    search for all vertexes with input degree equal to 0 and put them in queue,
+    iterate trough the queue breaking the conection between the vertexes and 
+    its adjacents, if after this any adjacent has an input degree equal to 0
+    the vertex is add to the queue, this method is repeated until the queue is
+    empty.
+    
+    @return list list of ordered vertexes 
+    """
+    
+    def topologicalSorting(self):
+        adjListCopy = dict(self.adjList)
+        outOnly = []
+        count = 0
+        for key in self.adjList:
+            if self.inputDegree(key) == 0:
+                outOnly.append(key)
+        ordered = {}
+        while len(outOnly) > 0:
+            v = outOnly.pop(0)
+            ordered[v] = count
+            count += 1
+            vList = adjListCopy[v].copy()
+            for adjacent in vList:
+                del adjListCopy[v][adjacent]
+                if self.inputDegree(adjacent) == 0:
+                       outOnly.append(adjacent)
+        for key in adjListCopy:
+            if len(adjListCopy[key]) > 0: return None
+        else:
+            return ordered
         
+    """
+    A bipartite graph is a graph whose vertices can be divided into two 
+    disjoint sets U and V (that is, U and V are each independent sets) such 
+    that every edge connects a vertex in U to one in V.
+    
+    The aproach choosen is the graph coloring were a graph is bipartite if it
+    can be colored using only 2 colors.
+    The algoritm iterates trough all vertexes and for each on of them test
+    the attribution of two colors by checking if any of his adjacents is the
+    same color, then iterates again trough all vertex checking if any of them
+    are connected to the selected vertex has the same color, if none of those
+    two conditions is true, then assing the color to the vertex and break the
+    iteration.
+    
+    @return boolean
+    """
+        
+    def isBipartite(self):
+        colors = [0, 1]
+        coloredGraph = {}
+        for key in self.adjList: coloredGraph[key] = None
+        for vertex in coloredGraph:
+            if coloredGraph[vertex] == None:
+                for color in colors:
+                    checkAdj = True
+                    for adjacent in self.adjList[vertex]:
+                        if color == coloredGraph[adjacent]:
+                            checkAdj = False
+                            break
+                    for isConected in self.adjList:
+                        if vertex != isConected:
+                            if vertex in self.adjList[isConected]:
+                                if color == coloredGraph[isConected]:
+                                    checkAdj = False
+                                    break
+                    if checkAdj:
+                        coloredGraph[vertice] = color
+                        break
+        if None in coloredGraph: return False
+        return True
+        
+    """
+    Dijkstra's algorithm, is a graph search algorithm that solves the 
+    single-source shortest path problem for a graph with non-negative edge 
+    path costs, producing a shortest path tree.
+    
+    iterates trought all vertexes, put then on the ways list and verify if
+    their weight is the lowest or if there is no weight saved, then put the
+    adjacent vertexes is the ways list and repeat the process to each one,
+    until all paths weights are calculated.
+    
 
+    @param  int  starting vertex
+    @return list list with the shortest paths  and weights from the starting 
+                 vertex to all vertexes.
+    """
+        
     def Dijkstra(self, v):
         dist = dict.fromkeys(self.adjList)
         ways = []
@@ -241,6 +362,27 @@ class DiGraph:
                 if dist[neighbour] == None:
                     heapq.heappush(ways, ( weight + self.adjList[last][neighbour] , way + [neighbour] ) )
         return dist
+    
+        
+    """
+    The Bellman–Ford algorithm is an algorithm that computes shortest paths 
+    from a single source vertex to all of the other vertices. It is slower 
+    than Dijkstra's algorithm for the same problem, but more versatile, as 
+    it is capable of handling graphs in which some of 
+    the edge weights are negative numbers.
+    
+    iterates trought all vertexes, put then on the ways list and verify if
+    their weight is the lowest or if there is no weight saved, then put the
+    adjacent vertexes is the ways list and repeat the process to each one,
+    until all paths weights are calculated.
+    iterates trough all vertexes and it's adjcents and verify if there's any
+    negative cicle.
+    
+
+    @param  int  starting vertex
+    @return list list with the shortest paths  and weights from the starting 
+                 vertex to all vertexes.
+    """
             
     def BellmanFord(self, v):
         dist = dict.fromkeys(self.adjList)
@@ -257,9 +399,25 @@ class DiGraph:
             for neighbour in self.adjList[vertex]:
                 if dist[vertex] != None and dist[neighbour] != None:
                     if dist[vertex] > dist[neighbour] + self.adjList[vertex][neighbour]:
-                        return 'negative cicle between ' + (str) (vertex) + ' and ' + (str) (neighbour) 
+                        print 'negative cicle between ' + (str) (vertex) + ' and ' + (str) (neighbour) 
+                        return None
         return dist
 
+    """
+    The Floyd–Warshall algorithm is a graph analysis algorithm for finding 
+    shortest paths in a weighted graph with positive or negative edge weights 
+    (but with no negative cycles). A single execution of the algorithm will 
+    find the lengths (summed weights) of the shortest paths between all pairs 
+    of vertices, though it does not return details of the paths themselves.
+    
+    Uses 3 iterations to make all possible comparisons between the vertexes
+    and then compare 3 diferent combinations to get the weight, keep iterating
+    until all the paths are found, the weights are put in a matrix and then
+    the matrix is returned.
+    
+    @return [[]] matrix with the shortest paths from all vertexes to all vertexes.
+    """
+    
     def FloydWarshal(self):
         dist = self.adjList
         for k in dist:
