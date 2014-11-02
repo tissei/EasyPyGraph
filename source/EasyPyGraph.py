@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: ascii -*-
 
 """
 PyGraph
@@ -225,7 +223,7 @@ class DiGraph:
     """
     
     def areConected(self, start, end):
-         end in self.depthSearch(start): 
+         return end in self.depthSearch(start) 
     
     """
     Verifies if a vertex can be reached back starting from himself
@@ -339,11 +337,15 @@ class DiGraph:
     single-source shortest path problem for a graph with non-negative edge 
     path costs, producing a shortest path tree.
     
-    iterates trought all vertexes, put then on the ways list and verify if
-    their weight is the lowest or if there is no weight saved, then put the
-    adjacent vertexes is the ways list and repeat the process to each one,
-    until all paths weights are calculated.
-    
+    puts the initial vertex on ways, the weight 0 and the way transversed
+    until now(only the initil vertex), initiate an iteration that continues
+    to execute until ways is empty, when the iteration begins, remove the
+    vertex with the lower value from ways and its weight,then assign to last
+    the last visited vertex from the removed vertex from ways, then assign to
+    dist the weight of the removed vertex from ways, then iterates trough the
+    adjacents of last and if the distance of this adjacent has not yet been
+    calculated add's him to the ways list and then repeats the process until
+    the ways list in empty.
 
     @param  int  starting vertex
     @return list list with the shortest paths  and weights from the starting 
@@ -371,10 +373,15 @@ class DiGraph:
     it is capable of handling graphs in which some of 
     the edge weights are negative numbers.
     
-    iterates trought all vertexes, put then on the ways list and verify if
-    their weight is the lowest or if there is no weight saved, then put the
-    adjacent vertexes is the ways list and repeat the process to each one,
-    until all paths weights are calculated.
+    puts the initial vertex on ways, the weight 0 and the way transversed
+    until now(only the initil vertex), initiate an iteration that continues
+    to execute until ways is empty, when the iteration begins, remove the
+    vertex with the lower value from ways and its weight,then assign to last
+    the last visited vertex from the removed vertex from ways, then assign to
+    dist the weight of the removed vertex from ways, then iterates trough the
+    adjacents of last and if the distance of this adjacent has not yet been
+    calculated add's him to the ways list and then repeats the process until
+    the ways list in empty.
     iterates trough all vertexes and it's adjcents and verify if there's any
     negative cicle.
     
@@ -433,25 +440,3 @@ class DiGraph:
                             if dist[i][j] > dist[i][k] + dist[k][j]:
                                 dist[i][j] = dist[i][k] + dist[k][j] 
         return dist
-
-digraph = DiGraph()
-
-
-
-digraph.addVertex(10)
-
-
-
-digraph.addEdge(10,2)
-digraph.addEdge(2,5)
-digraph.addEdge(3,2)
-digraph.addEdge(5,7)
-digraph.addEdge(2,10)
-digraph.addEdge(2,4)
-digraph.addEdge(4,7)
-digraph.addEdge(4,8)
-
-print digraph
-
-print digraph.lengthSearch(2)
-
