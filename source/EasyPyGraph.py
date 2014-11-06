@@ -3,9 +3,7 @@
 PyGraph
 ~~~~~~~~~~~~~
 
-[TODO -> Brief introduction to the PyGraph]
-
-[TODO -> Brief introduction to the DiGraph Class]
+PyGraph is a python library that supports digraph and graph data structure.
 
 WARNING! This is a prototype.
 
@@ -34,17 +32,16 @@ class DiGraph:
     def __init__(self):
         self.adjList = {}
 
-    # TODO -> Improve printing method!
     def __str__(self):
         return str( self.adjList )
     
     """
     Add an vertex to the adjList
     
-    verify if the vertex dont exist already, if not adds him to the adjList
+    Verifies if the vertex does not exist adds it to the adjList
     
-    @param vertex integer the vertex to be added
-    @return       void
+    @param vertex the vertex to be added
+    @return void
     """
     
     def addVertex(self, vertex):
@@ -54,13 +51,14 @@ class DiGraph:
     """
     Add an edge between two vertexes
     
-    adds the vertex to the adjList if they dont exist and add the weight
-    between then in the adjList.
+    If the edge does not exists adds it with given weight,
+    If the edge already exists updates its weight
     
     @see addVertex method    
-    @param vertex   integer the starting vertex
-    @param adjacent integer the adjacent vertex
-    @return         void
+    @param vertex the starting vertex
+    @param adjacent the ending vertex
+    @param weight the edge weight
+    @return void
     """
             
     def addEdge(self, vertex, adjacent, weight = 1):
@@ -71,11 +69,11 @@ class DiGraph:
     """
     Remove a vertex and all his edges
     
-    remove the given vertex from the adjList and iterates trough all other
-    vertices adjList to remove any edges connecting to him.
+    Removes the given vertex from the adjList and iterates trough all other
+    vertexes in the adjList to remove any edges leading to it
     
-    @param vertex integer the starting vertex
-    @return       void
+    @param vertex the vertex to be removed
+    @return void
     """
 
     def removeVertex(self, vertex):
@@ -88,10 +86,10 @@ class DiGraph:
     """
     Remove a edge between two vertexes
     
-    delete the adjList index between the starting vertex and its adjacent
+    Removes only the edge between the two vertexes
     
-    @param vertex integer the starting vertex
-    @param vertex integer the starting vertex adjacent
+    @param vertex the starting vertex
+    @param adjacent the ending vertex
     @return       void
     """
 
@@ -103,7 +101,7 @@ class DiGraph:
     """            
     Verifies if a given vertex exists
     
-    verify if the vertex is in the adjList
+    Verifies the presence of the vertex in the adjList
     
     @param integer vertex the vertex to be searched
     @return
