@@ -84,13 +84,13 @@ class DiGraph:
                     del self.adjList[adjacent][vertex]
     
     """
-    Remove a edge between two vertexes
+    Remove an edge between two vertexes
     
     Removes only the edge between the two vertexes
     
     @param vertex the starting vertex
     @param adjacent the ending vertex
-    @return       void
+    @return void
     """
 
     def removeEdge(self, vertex, adjacent):
@@ -103,21 +103,22 @@ class DiGraph:
     
     Verifies the presence of the vertex in the adjList
     
-    @param integer vertex the vertex to be searched
-    @return
+    @param vertex the vertex to be searched
+    @return boolean
     """
                 
     def hasVertex(self, vertex):
         return vertex in self.adjList
+
     """
     Verifies if an edge exists between two vertex
     
-    verify if the vertex is in the adjList and if it's adjacent is in the 
+    Verifies if the vertex is in the adjList and if it's adjacent is in the 
     vertex adjList.
     
-    @param vertex   integer the starting vertex
-    @param adjacent integer the adjacent vertex from the starting vertex
-    @return         boolean 
+    @param vertex the starting vertex
+    @param adjacent the adjacent vertex from the starting vertex
+    @return boolean 
     """
 
     def hasEdge(self, vertex, adjacent):
@@ -126,12 +127,13 @@ class DiGraph:
     """
     Returns the output degree of a vertex
     
-    returns the lenght of the adjacent list from the given vertex
+    Returns the length of the adjacent list of the given vertex
     
-    @param vertex integer the vertex wich the degree will be calculated
-    @return integer if the vertex exists and None if it dont
+    @param vertex the vertex which the output degree will be calculated
+    @return integer if the vertex exists 
+    @return None if the vertex does not exists
     """
-    
+
     def outputDegree(self, vertex):
         if vertex in self.adjList:
             return len(self.adjList[vertex])
@@ -140,11 +142,12 @@ class DiGraph:
     """
     Returns the input degree of a given vertex
     
-    iterate trough all vertexes in the adjList and verify if any of 
+    Iterate trough all vertexes in the adjList and verify if any of 
     them is adjacent to the given vertex.
     
-    @param vertex integer the vertex wich the degree will be calculated
-    @return integer if the vertex exists and None if it dont
+    @param vertex the vertex which the input degree will be calculated
+    @return integer if the vertex exists
+    @return None if the vertex does not exists
     """
     
     def inputDegree(self, vertex):
@@ -157,17 +160,16 @@ class DiGraph:
         return None
     
     """
-    Breadth-first search (BFS) is a strategy for searching in a graph when 
-    search is limited to essentially two operations: (a) visit and inspect a 
-    node of a graph; (b) gain access to visit the nodes that neighbor the 
-    currently visited node.
+    Breadth-first search (BFS) is an algorithm for traversing or searching 
+    graphs. Starts with a root node and explores all neighbors nodes before
+    moving to another node. 
     
-    the BFS begins at a root node and inspects all the neighboring nodes. 
-    Then for each of those neighbor nodes in turn, it inspects their neighbor 
-    nodes which were unvisited, and so on.
+    The BFS begins at a root node and inspects all the neighbors nodes. 
+    Then for each of those neighbor nodes in turn, it inspects their unvisited
+    neighbors, and so on.
     
-    @param vertex root vertex
-    @return list list with the search order
+    @param start The starting vertex in the search
+    @return List A List containing the search order of the vertexes
     """
     
     def breadthFirstSearch(self, start):
@@ -186,16 +188,14 @@ class DiGraph:
     """
     Depth-first search (DFS) is an algorithm for traversing or searching 
     graphs. Starts with a root node and explores as far as possible along 
-    each branch before backtracking.    
+    each branch before backtracking.
+
+    The DFS begins at a root node and selects one the neighbors nodes and keep
+    going through until there is a vertex with no neighbor that has not been visited,
+    then backtracks to the closest parent node, and so on.
     
-    iterates trough the starting vertex adjacents, select on of then and
-    keep going trought it's adjacent until theres a vertex with no adjacents
-    or all of its adjacent have already being visited, then comes back to the
-    starting vertex, select another adjacent and reapeat the process until all
-    vertexes are visited.
-    
-    @param vertex starting vertex
-    @return list list with the search order
+    @param start The starting vertex in the search
+    @return List A List containing the search order of the vertexes
     """
     
     def depthFirstSearch(self, start):
@@ -212,28 +212,31 @@ class DiGraph:
     """
     Verifies if a vertex can be reached from another vertex
     
-    utilizes the depth search to verify if there's any way to reach the
+    Uses DFS to verify if there's any way to reach the
     end vertex from the start vertex.
     
-    @param vertex integer the starting vertex
-    @param vertex integer the vertex to be reached
-    @return       boolean 
+    @param vertex The starting vertex
+    @param vertex The vertex to be reached
+    @return boolean 
     """
     
     def areConected(self, start, end):
          return end in self.depthSearch(start) 
     
     """
-    Verifies if a vertex can be reached back starting from himself
+    Verifies if a vertex can be reached back starting from its neighbors
     
-    utilizes the depth search to verify if there's any way to reach back
-    the vertex from any possible conection from his adjacents.
+    Uses DFS to verify if there is any way to reach back
+    the vertex from any of its neighbors.
     
-    @param vertex integer the starting vertex
-    @return       boolean 
+    @param vertex The starting vertex
+    @return Boolean 
     """
     
     def hasCicle(self, vertex):
+    	# This is gonna break!
+    	# O primeiro passo do DFS eh adicionar o vertica na lista de visitados
+    	# A correcao seria realizar a busca em profundidade a partir de cada um dos vizinhos do vertex
         return vertex in self.depthSearch(vertex)
     
     """
