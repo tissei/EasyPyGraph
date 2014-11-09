@@ -234,10 +234,9 @@ class DiGraph:
     """
     
     def hasCicle(self, vertex):
-    	# This is gonna break!
-    	# O primeiro passo do DFS eh adicionar o vertica na lista de visitados
-    	# A correcao seria realizar a busca em profundidade a partir de cada um dos vizinhos do vertex
-        return vertex in self.depthSearch(vertex)
+        for adjacent in self.adjList[vertex]:
+            if vertex in self.depthSearch(adjacent): return False
+        return True
     
     """
     Verifies if there is no vertex that can be reached back starting from himself
